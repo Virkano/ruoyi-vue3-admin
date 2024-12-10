@@ -4,7 +4,7 @@
 
 <template>
   <div>
-    123
+    首页
   </div>
 </template>
 

@@ -107,7 +107,7 @@ function toggleTheme() {
   overflow: hidden;
   position: relative;
   background: var(--navbar-bg);
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  border-bottom: 1px solid var(--tags-item-border, rgba(5, 5, 5, 0.06));
 
   .hamburger-container {
     line-height: 46px;

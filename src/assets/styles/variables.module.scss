@@ -74,6 +74,8 @@ $--color-info: #909399;
   
   --navbar-bg: #ffffff;
   --navbar-text: #303133;
+
+  --content-bg: #f0f2f5;
   
   /* splitpanes default-theme 变量 */
   --splitpanes-default-bg: #ffffff;
@@ -84,6 +86,7 @@ $--color-info: #909399;
 html.dark {
   /* 默认通用 */
   --el-bg-color: #141414;
+  --content-bg: #141414;
   --el-bg-color-overlay: #1d1e1f;
   --el-text-color-primary: #ffffff;
   --el-text-color-regular: #d0d0d0;
