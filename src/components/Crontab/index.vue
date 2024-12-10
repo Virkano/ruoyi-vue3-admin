@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 <template>
     <div>
         <el-tabs type="border-card">

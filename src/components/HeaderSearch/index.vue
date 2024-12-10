@@ -1,36 +1,17 @@
-<template>
-  <div :class="{ 'show': show }" class="header-search">
-    <svg-icon class-name="search-icon" icon-class="search" @click.stop="click" />
-    <el-select
-      ref="headerSearchSelectRef"
-      v-model="search"
-      :remote-method="querySearch"
-      filterable
-      default-first-option
-      remote
-      placeholder="Search"
-      class="header-search-select"
-      @change="change"
-    >
-      <el-option v-for="option in options" :key="option.item.path" :value="option.item" :label="option.item.title.join(' > ')" />
-    </el-select>
-  </div>
-</template>
-
 <script setup>
-import Fuse from 'fuse.js'
+import usePermissionStore from '@/store/modules/permission'
 import { getNormalPath } from '@/utils/ruoyi'
 import { isHttp } from '@/utils/validate'
-import usePermissionStore from '@/store/modules/permission'
+import Fuse from 'fuse.js'
 
-const search = ref('');
-const options = ref([]);
-const searchPool = ref([]);
-const show = ref(false);
-const fuse = ref(undefined);
-const headerSearchSelectRef = ref(null);
-const router = useRouter();
-const routes = computed(() => usePermissionStore().routes);
+const search = ref('')
+const options = ref([])
+const searchPool = ref([])
+const show = ref(false)
+const fuse = ref(undefined)
+const headerSearchSelectRef = ref(null)
+const router = useRouter()
+const routes = computed(() => usePermissionStore().routes)
 
 function click() {
   show.value = !show.value
@@ -44,16 +25,18 @@ function close() {
   show.value = false
 }
 function change(val) {
-  const path = val.path;
-  const query = val.query;
+  const path = val.path
+  const query = val.query
   if (isHttp(path)) {
     // http(s):// 路径新窗口打开
-    const pindex = path.indexOf("http");
-    window.open(path.substr(pindex, path.length), "_blank");
-  } else {
+    const pindex = path.indexOf('http')
+    window.open(path.substr(pindex, path.length), '_blank')
+  }
+  else {
     if (query) {
-      router.push({ path: path, query: JSON.parse(query) });
-    } else {
+      router.push({ path, query: JSON.parse(query) })
+    }
+    else {
       router.push(path)
     }
   }
@@ -73,11 +56,11 @@ function initFuse(list) {
     minMatchCharLength: 1,
     keys: [{
       name: 'title',
-      weight: 0.7
+      weight: 0.7,
     }, {
       name: 'path',
-      weight: 0.3
-    }]
+      weight: 0.3,
+    }],
   })
 }
 // Filter out the routes that can be displayed in the sidebar
@@ -88,10 +71,10 @@ function generateRoutes(routes, basePath = '', prefixTitle = []) {
   for (const r of routes) {
     // skip hidden router
     if (r.hidden) { continue }
-    const p = r.path.length > 0 && r.path[0] === '/' ? r.path : '/' + r.path;
+    const p = r.path.length > 0 && r.path[0] === '/' ? r.path : `/${r.path}`
     const data = {
       path: !isHttp(r.path) ? getNormalPath(basePath + p) : r.path,
-      title: [...prefixTitle]
+      title: [...prefixTitle],
     }
 
     if (r.meta && r.meta.title) {
@@ -120,13 +103,14 @@ function generateRoutes(routes, basePath = '', prefixTitle = []) {
 function querySearch(query) {
   if (query !== '') {
     options.value = fuse.value.search(query)
-  } else {
+  }
+  else {
     options.value = []
   }
 }
 
 onMounted(() => {
-  searchPool.value = generateRoutes(routes.value);
+  searchPool.value = generateRoutes(routes.value)
 })
 
 watchEffect(() => {
@@ -136,7 +120,8 @@ watchEffect(() => {
 watch(show, (value) => {
   if (value) {
     document.body.addEventListener('click', close)
-  } else {
+  }
+  else {
     document.body.removeEventListener('click', close)
   }
 })
@@ -145,6 +130,25 @@ watch(searchPool, (list) => {
   initFuse(list)
 })
 </script>
+
+<template>
+  <div :class="{ show }" class="header-search">
+    <svg-icon class-name="search-icon" icon-class="search" @click.stop="click" />
+    <el-select
+      ref="headerSearchSelectRef"
+      v-model="search"
+      :remote-method="querySearch"
+      filterable
+      default-first-option
+      remote
+      placeholder="Search"
+      class="header-search-select"
+      @change="change"
+    >
+      <el-option v-for="option in options" :key="option.item.path" :value="option.item" :label="option.item.title.join(' > ')" />
+    </el-select>
+  </div>
+</template>
 
 <style lang='scss' scoped>
 .header-search {
