@@ -29,6 +29,7 @@ export default antfu(
     rules: {
       'node/prefer-global/process': 'off',
       'vue/no-v-text-v-html-on-component': 'off',
+      'no-extra-boolean-cast': 'off',
     },
   },
   // Legacy config

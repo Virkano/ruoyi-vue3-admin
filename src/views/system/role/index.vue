@@ -153,7 +153,7 @@ function getDeptAllCheckedKeys() {
 
 /** 重置新增的表单以及其他数据  */
 function reset() {
-  if (menuRef.value !== undefined) {
+  if (!!menuRef.value) {
     menuRef.value.setCheckedKeys([])
   }
   menuExpand.value = false
@@ -328,7 +328,7 @@ function handleDataScope(row) {
 
 /** 提交按钮（数据权限） */
 function submitDataScope() {
-  if (form.value.roleId !== undefined) {
+  if (form.value.roleId != undefined) {
     form.value.deptIds = getDeptAllCheckedKeys()
     dataScope(form.value).then((_response) => {
       proxy.$modal.msgSuccess('修改成功')
