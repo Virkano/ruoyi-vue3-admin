@@ -1,6 +1,7 @@
 <script setup>
 import { getToken } from '@/utils/auth'
 import { QuillEditor } from '@vueup/vue-quill'
+import axios from 'axios'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
 const props = defineProps({
@@ -35,10 +36,12 @@ const props = defineProps({
   },
 })
 
+const emits = defineEmits(['update:modelValue'])
+
 const { proxy } = getCurrentInstance()
 
 const quillEditorRef = ref()
-const uploadUrl = ref(`${import.meta.env.VITE_APP_BASE_API}/common/upload`) // 上传的图片服务器地址
+const uploadUrl = ref(`${import.meta.env.VITE_BASEURL}/common/upload`) // 上传的图片服务器地址
 const headers = ref({
   Authorization: `Bearer ${getToken()}`,
 })
@@ -80,13 +83,13 @@ const styles = computed(() => {
 const content = ref('')
 watch(() => props.modelValue, (v) => {
   if (v !== content.value) {
-    content.value = v == undefined ? '<p></p>' : v
+    content.value = v === undefined ? '<p></p>' : v
   }
 }, { immediate: true })
 
 // 如果设置了上传地址则自定义图片上传事件
 onMounted(() => {
-  if (props.type == 'url') {
+  if (props.type === 'url') {
     const quill = quillEditorRef.value.getQuill()
     const toolbar = quill.getModule('toolbar')
     toolbar.addHandler('image', (value) => {
@@ -97,8 +100,57 @@ onMounted(() => {
         quill.format('image', false)
       }
     })
+
+    // 监听粘贴事件
+    const clipboard = quill.getModule('clipboard')
+    clipboard.addMatcher('img', (node) => {
+      if (!node || !node.src)
+        return node // 确保节点有效
+      const base64 = node.src
+      if (base64.startsWith('data:image')) {
+        uploadImage(base64)
+      }
+    })
   }
 })
+
+function base64ToFile(base64Data, fileName) {
+  const arr = base64Data.split(',')
+  const mime = arr[0].match(/:(.*?);/)[1]
+  const bstr = atob(arr[1])
+  let n = bstr.length
+  const u8arr = new Uint8Array(n)
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n)
+  }
+  return new File([u8arr], fileName, { type: mime })
+}
+
+// 粘贴上传图片
+function uploadImage(base64) {
+  return new Promise((resolve, reject) => {
+    const formData = new FormData()
+    formData.append('file', base64ToFile(base64, 'test.png'))
+    axios.post(uploadUrl.value, formData, { headers: headers.value }).then((res) => {
+      if (res.data.code === 200) {
+        // resolve(import.meta.env.VITE_BASEURL + res.data.fileName)
+        // 获取富文本实例
+        const quill = toRaw(quillEditorRef.value).getQuill()
+        // 获取光标位置
+        const length = quill.selection.savedRange.index
+        quill.insertEmbed(length, 'image', import.meta.env.VITE_BASEURL + res.data.fileName)
+        quill.setSelection(length + 1)
+      }
+      else {
+        // eslint-disable-next-line prefer-promise-reject-errors
+        reject(`上传失败，服务器返回了错误：${res.message || '未知错误'}`)
+      }
+    }).catch((err) => {
+      // eslint-disable-next-line prefer-promise-reject-errors
+      reject(`上传失败，错误信息：${err.message || '未知错误'}`)
+    })
+  })
+}
 
 // 上传前校检格式和大小
 function handleBeforeUpload(file) {
@@ -121,9 +173,9 @@ function handleBeforeUpload(file) {
 }
 
 // 上传成功处理
-function handleUploadSuccess(res, file) {
+function handleUploadSuccess(res, _file) {
   // 如果上传成功
-  if (res.code == 200) {
+  if (res.code === 200) {
     // 获取富文本实例
     const quill = toRaw(quillEditorRef.value).getQuill()
     // 获取光标位置
@@ -147,7 +199,7 @@ function handleUploadError() {
 <template>
   <div>
     <el-upload
-      v-if="type == 'url'"
+      v-if="type === 'url'"
       :action="uploadUrl"
       :before-upload="handleBeforeUpload"
       :on-success="handleUploadSuccess"

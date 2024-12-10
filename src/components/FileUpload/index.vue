@@ -30,8 +30,8 @@ const emit = defineEmits()
 const { proxy } = getCurrentInstance()
 const number = ref(0)
 const uploadList = ref([])
-const baseUrl = import.meta.env.VITE_APP_BASE_API
-const uploadFileUrl = ref(`${import.meta.env.VITE_APP_BASE_API}/common/upload`) // 上传文件服务器地址
+const baseUrl = import.meta.env.VITE_BASEURL
+const uploadFileUrl = ref(`${import.meta.env.VITE_BASEURL}/common/upload`) // 上传文件服务器地址
 const headers = ref({ Authorization: `Bearer ${getToken()}` })
 const fileList = ref([])
 const showTip = computed(
@@ -151,16 +151,16 @@ function listToString(list, separator) {
       strs += list[i].url + separator
     }
   }
-  return strs != '' ? strs.substr(0, strs.length - 1) : ''
+  return strs !== '' ? strs.substr(0, strs.length - 1) : ''
 }
 </script>
 
 <template>
   <div class="upload-file">
     <el-upload
+      ref="fileUpload"
       multiple
       :action="uploadFileUrl"
-      ref="fileUpload"
       :before-upload="handleBeforeUpload"
       :file-list="fileList"
       :limit="limit"
