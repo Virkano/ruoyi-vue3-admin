@@ -32,7 +32,7 @@ pnpm run dev
 pnpm run deploy:prod
 ```
 
--   git提交钩子
+-   git提交钩子（未配置）
 
 > 代码 pnpm run lint:eslint 通过后才允许提交，代码提交会自动直接代码格式化校验
 
