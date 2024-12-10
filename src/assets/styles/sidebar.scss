@@ -67,6 +67,10 @@
       width: 100% !important;
     }
 
+    .el-menu-item * {
+      vertical-align: middle;
+    }
+    
     .el-menu-item, .menu-title {
       overflow: hidden !important;
       text-overflow: ellipsis !important;

@@ -115,8 +115,9 @@ function handleSelect(key, keyPath) {
 function activeRoutes(key) {
   const routes = []
   if (childrenMenus.value && childrenMenus.value.length > 0) {
+    // eslint-disable-next-line array-callback-return
     childrenMenus.value.map((item) => {
-      if (key == item.parentPath || (key == 'index' && item.path == '')) {
+      if (key === item.parentPath || (key === 'index' && item.path === '')) {
         routes.push(item)
       }
     })
