@@ -176,6 +176,17 @@ html.dark {
     }
   }
 
+  /* 滚动条覆盖 */
+
+  ::-webkit-scrollbar-track {
+    background-color: #141414;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #1C1E22;
+    border-radius: 3px;
+  }
+
   /* 表格样式覆盖 */
   .el-table {
     --el-table-header-bg-color: var(--el-bg-color-overlay) !important;

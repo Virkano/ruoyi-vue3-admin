@@ -11,7 +11,9 @@ import {
 } from 'unocss'
 
 export default defineConfig({
-  shortcuts: [],
+  shortcuts: [
+    { 'text-primary': 'cursor-pointer text-blue-500 hover:text-blue-700' },
+  ],
   //   https://unocss.dev/presets/attributify
   presets: [
     presetUno(),
@@ -28,13 +30,13 @@ export default defineConfig({
       },
     }),
     presetTypography(),
-    // presetWebFonts({
-    // fonts: {
-    //   sans: 'DM Sans',
-    //   serif: 'DM Serif Display',
-    //   mono: 'DM Mono',
-    // },
-    // }),
+    presetWebFonts({
+      // fonts: {
+      //   sans: 'DM Sans',
+      //   serif: 'DM Serif Display',
+      //   mono: 'DM Mono',
+      // },
+    }),
   ],
   transformers: [transformerDirectives(), transformerVariantGroup()],
   safelist: 'prose m-auto text-left'.split(' '),

@@ -14,9 +14,6 @@ importers:
       '@vueup/vue-quill':
         specifier: 1.2.0
         version: 1.2.0(vue@3.5.8(typescript@5.7.2))
-      '@vueuse/core':
-        specifier: 10.11.0
-        version: 10.11.0(vue@3.5.8(typescript@5.7.2))
       axios:
         specifier: 0.28.1
         version: 0.28.1
@@ -78,6 +75,9 @@ importers:
       '@vitejs/plugin-vue':
         specifier: 5.0.5
         version: 5.0.5(vite@5.3.2(@types/node@22.10.1)(sass@1.77.5))(vue@3.5.8(typescript@5.7.2))
+      '@vueuse/core':
+        specifier: 10.11.0
+        version: 10.11.0(vue@3.5.8(typescript@5.7.2))
       deploy-cli-service:
         specifier: ^1.5.3
         version: 1.5.3
@@ -108,6 +108,9 @@ importers:
       vite-plugin-svg-icons:
         specifier: 2.0.1
         version: 2.0.1(vite@5.3.2(@types/node@22.10.1)(sass@1.77.5))
+      watermark-js-plus:
+        specifier: ^1.5.7
+        version: 1.5.7
 
 packages:
 
@@ -3716,6 +3719,10 @@ packages:
     resolution: {integrity: sha512-FU5HCWBmsf20GpP3eudURW3WdWTKIbEIQxh9/8GE806hydR9qZqRRxRE3RjqX7PkuLuMQG/A7n3cfj9rCEchww==}
     peerDependencies:
       vue: ^3.0.1
+
+  watermark-js-plus@1.5.7:
+    resolution: {integrity: sha512-KaQEUnvBX5em2hBeuKcpAASpV+sO1j8NbXY7FL7jb0w1TCKmMSyn8nkj2e+KeleuQ1iwyXHEMFdSWXDIQsACYQ==}
+    engines: {node: '>=20.0.0'}
 
   wcwidth@1.0.1:
     resolution: {integrity: sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==}
@@ -7925,6 +7932,8 @@ snapshots:
     dependencies:
       sortablejs: 1.14.0
       vue: 3.5.8(typescript@5.7.2)
+
+  watermark-js-plus@1.5.7: {}
 
   wcwidth@1.0.1:
     dependencies:
