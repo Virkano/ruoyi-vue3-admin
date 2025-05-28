@@ -29,7 +29,7 @@ export default defineConfig({
         'vertical-align': 'middle',
       },
     }),
-    presetTypography(),
+    presetTypography(), // 可以直接写在标签上 <div text-sm></div>
     presetWebFonts({
       // fonts: {
       //   sans: 'DM Sans',
