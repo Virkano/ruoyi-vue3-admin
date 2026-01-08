@@ -18,6 +18,7 @@ declare module 'vue' {
     CrontabWeek: typeof import('./../src/components/Crontab/week.vue')['default']
     CrontabYear: typeof import('./../src/components/Crontab/year.vue')['default']
     DictTag: typeof import('./../src/components/DictTag/index.vue')['default']
+    DocumentHandler: typeof import('./../src/components/DocumentHandler.vue')['default']
     Editor: typeof import('./../src/components/Editor/index.vue')['default']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
     ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']

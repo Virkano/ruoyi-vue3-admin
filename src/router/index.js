@@ -71,6 +71,19 @@ export const constantRoutes = [
     ],
   },
   {
+    path: '',
+    component: Layout,
+    redirect: '/office',
+    children: [
+      {
+        path: '/office',
+        component: () => import('@/views/office'),
+        name: 'Office',
+        meta: { title: 'office', icon: 'dashboard', affix: true },
+      },
+    ],
+  },
+  {
     path: '/user',
     component: Layout,
     hidden: true,
